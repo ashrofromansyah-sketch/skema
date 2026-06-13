@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Catatan Latihan — SMAEK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #6c63ff; --purple2: #857aff; --purple-light: #ede9ff; --purple-soft: rgba(108,99,255,0.1); --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --blue: #3b82f6; --bg: #f1f3f8; --white: #ffffff; --border: #e5e7eb; --text: #1a1a2e; --text2: #6b7280; --text3: #9ca3af; --font: 'Poppins', sans-serif; --sidebar-w: 230px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--white); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; box-shadow: 2px 0 12px rgba(0,0,0,.05); }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--purple), #9f7aea); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text .name { font-size: 15px; font-weight: 700; } .logo-text .sub { font-size: 10px; color: var(--text3); }
+    .nav { padding: 14px 12px; flex: 1; overflow-y: auto; } .nav-section { margin-bottom: 18px; }
+    .nav-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 10px; margin-bottom: 6px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text2); text-decoration: none; transition: all .15s; margin-bottom: 2px; }
+    .nav-item:hover { background: var(--purple-soft); color: var(--purple); }
+    .nav-item.active { background: var(--purple); color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(108,99,255,.35); }
+    .nav-item .ni { font-size: 16px; width: 20px; text-align: center; }
+    .main { margin-left: var(--sidebar-w); flex: 1; }
+    .page-top { background: linear-gradient(135deg, #3b82f6, #6366f1); padding: 28px 36px 60px; color: #fff; }
+    .page-top h1 { font-size: 22px; font-weight: 700; } .page-top p { font-size: 13px; opacity: .8; margin-top: 4px; }
+    .page-top-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .page-body { padding: 0 36px 36px; margin-top: -40px; }
+    .btn { padding: 10px 18px; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 12px rgba(108,99,255,.3); } .btn-primary:hover { background: var(--purple2); }
+    .btn-white { background: #fff; color: var(--blue); } .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+    .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+    .btn-danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
+    .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 8px; }
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); }
+    .table-wrap { overflow-x: auto; border-radius: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; padding: 12px 18px; background: #fafafa; border-bottom: 1px solid var(--border); text-align: left; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; } tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--purple-soft); } tbody td { padding: 13px 18px; font-size: 13px; }
+    .toolbar { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
+    .search-box { flex: 1; min-width: 200px; position: relative; }
+    .search-box input { width: 100%; padding: 10px 14px 10px 38px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
+    .search-box .si { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); }
+    select.sel { padding: 10px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; cursor: pointer; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-green { background: rgba(34,197,94,.12); color: var(--green); } .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
+    .badge-blue { background: rgba(59,130,246,.12); color: var(--blue); } .badge-gray { background: #f3f4f6; color: var(--text3); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--white); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.2); padding: 32px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
+    .modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 22px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-field { margin-bottom: 14px; }
+    .form-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 11px 14px; background: #f9fafb; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--purple); background: #fff; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: var(--white); border-radius: 12px; padding: 14px 20px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.15); transform: translateY(16px); opacity: 0; transition: all .25s; border-left: 4px solid var(--green); }
+    .toast.show { transform: translateY(0); opacity: 1; } .toast.success { border-left-color: var(--green); }
+    .empty { text-align: center; padding: 50px 20px; } .empty p { font-size: 13px; color: var(--text3); }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"></div>
+      <div class="logo-text"><div class="name">SMAEK</div><div class="sub">Sistem Manajemen Ekskul</div></div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section"><div class="nav-section-label">Utama</div>
+        <a class="nav-item" href="/dashboard"><span class="ni"></span>Dashboard</a></div>
+      <div class="nav-section"><div class="nav-section-label">Manajemen</div>
+        <a class="nav-item" href="/anggota"><span class="ni"></span>Anggota</a>
+        <a class="nav-item" href="/disiplin"><span class="ni"></span>Disiplin</a>
+        <a class="nav-item" href="/pelanggaran"><span class="ni"></span>Pelanggaran</a></div>
+      <div class="nav-section"><div class="nav-section-label">Aktivitas</div>
+        <a class="nav-item active" href="/latihan"><span class="ni"></span>Catatan Latihan</a>
+        <a class="nav-item" href="/riwayat"><span class="ni"></span>Riwayat Latihan</a></div>
+      <div class="nav-section"><div class="nav-section-label">Capaian</div>
+        <a class="nav-item" href="/prestasi"><span class="ni"></span>Prestasi</a></div>
+      <div class="nav-section"><div class="nav-section-label">Laporan</div>
+        <a class="nav-item" href="/laporan"><span class="ni"></span>Laporan Anggota</a></div>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="page-top">
+      <h1>Catatan Latihan</h1>
+      <p>Kelola jadwal dan catatan sesi latihan</p>
+      <div class="page-top-actions">
+        <button class="btn btn-white" onclick="openModal('modalAdd')">+ Tambah Latihan</button>
+      </div>
+    </div>
+    <div class="page-body">
+      <div th:if="${successMsg}" class="toast success show" th:text="${successMsg}"></div>
+      <form th:action="@{/latihan}" method="get">
+        <div class="toolbar">
+          <div class="search-box"><span class="si"></span>
+            <input type="text" name="q" th:value="${q}" placeholder="Cari judul latihan..."/></div>
+          <select class="sel" name="status" onchange="this.form.submit()">
+            <option value="">Semua Status</option>
+            <option value="Dijadwalkan" th:selected="${status == 'Dijadwalkan'}">Dijadwalkan</option>
+            <option value="Selesai"     th:selected="${status == 'Selesai'}">Selesai</option>
+            <option value="Batal"       th:selected="${status == 'Batal'}">Batal</option>
+          </select>
+          <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
+      </form>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Judul</th><th>Tanggal</th><th>Lokasi</th><th>Durasi</th><th>Status</th><th>Catatan</th><th>Aksi</th></tr></thead>
+            <tbody>
+              <tr th:if="${latihanList.isEmpty()}"><td colspan="8"><div class="empty"><p> Belum ada catatan latihan</p></div></td></tr>
+              <tr th:each="l, i : ${latihanList}">
+                <td style="color:var(--text3)" th:text="${i.count}"></td>
+                <td><strong th:text="${l.judul}"></strong></td>
+                <td style="font-size:12px;color:var(--text3)" th:text="${l.tanggal}"></td>
+                <td th:text="${l.lokasi}"></td>
+                <td th:text="${l.durasi + ' menit'}"></td>
+                <td><span class="badge"
+                  th:classappend="${l.status == 'Selesai'} ? 'badge-green' : (${l.status == 'Batal'} ? 'badge-gray' : 'badge-blue')"
+                  th:text="${l.status}"></span></td>
+                <td style="color:var(--text2);font-size:12px" th:text="${l.catatan}"></td>
+                <td>
+                  <form th:action="@{/latihan/hapus/{id}(id=${l.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus catatan ini?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
+    <div class="modal">
+      <h2>Tambah Catatan Latihan</h2>
+      <form th:action="@{/latihan/simpan}" method="post">
+        <div class="form-field">
+          <label>Judul Latihan</label>
+          <input type="text" name="judul" placeholder="Contoh: Latihan Rutin Minggu 1" required/>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Tanggal</label>
+            <input type="date" name="tanggal" required/>
+          </div>
+          <div class="form-field">
+            <label>Durasi (menit)</label>
+            <input type="number" name="durasi" placeholder="90" min="1"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Lokasi</label>
+            <input type="text" name="lokasi" placeholder="Contoh: Lapangan Sekolah"/>
+          </div>
+          <div class="form-field">
+            <label>Status</label>
+            <select name="status">
+              <option value="Dijadwalkan">Dijadwalkan</option>
+              <option value="Selesai">Selesai</option>
+              <option value="Batal">Batal</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label>Catatan</label>
+          <textarea name="catatan" rows="2" placeholder="Catatan tambahan..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+    window.onload = function() { const t = document.getElementById('toast'); if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); } }
+  </script>
+</body>
+</html>

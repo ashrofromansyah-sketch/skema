@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Laporan — SMAEK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #6c63ff; --purple2: #857aff; --purple-light: #ede9ff; --purple-soft: rgba(108,99,255,0.1); --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --bg: #f1f3f8; --white: #ffffff; --border: #e5e7eb; --text: #1a1a2e; --text2: #6b7280; --text3: #9ca3af; --font: 'Poppins', sans-serif; --sidebar-w: 230px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--white); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; box-shadow: 2px 0 12px rgba(0,0,0,.05); }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--purple), #9f7aea); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text .name { font-size: 15px; font-weight: 700; } .logo-text .sub { font-size: 10px; color: var(--text3); }
+    .nav { padding: 14px 12px; flex: 1; overflow-y: auto; } .nav-section { margin-bottom: 18px; }
+    .nav-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 10px; margin-bottom: 6px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text2); text-decoration: none; transition: all .15s; margin-bottom: 2px; }
+    .nav-item:hover { background: var(--purple-soft); color: var(--purple); }
+    .nav-item.active { background: var(--purple); color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(108,99,255,.35); }
+    .nav-item .ni { font-size: 16px; width: 20px; text-align: center; }
+    .main { margin-left: var(--sidebar-w); flex: 1; }
+    .page-top { background: linear-gradient(135deg, #059669, #10b981); padding: 28px 36px 60px; color: #fff; }
+    .page-top h1 { font-size: 22px; font-weight: 700; } .page-top p { font-size: 13px; opacity: .8; margin-top: 4px; }
+    .page-body { padding: 0 36px 36px; margin-top: -40px; }
+    .section-title { font-size: 15px; font-weight: 700; margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); margin-bottom: 20px; }
+    .table-wrap { overflow-x: auto; border-radius: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; padding: 12px 18px; background: #fafafa; border-bottom: 1px solid var(--border); text-align: left; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; } tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--purple-soft); } tbody td { padding: 13px 18px; font-size: 13px; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-purple { background: var(--purple-light); color: var(--purple); }
+    .badge-green { background: rgba(34,197,94,.12); color: var(--green); }
+    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
+    .badge-red { background: rgba(239,68,68,.12); color: var(--red); }
+    .badge-gray { background: #f3f4f6; color: var(--text3); }
+    .empty { text-align: center; padding: 30px 20px; } .empty p { font-size: 13px; color: var(--text3); }
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin-bottom: 20px; }
+    .stat-card { background: var(--white); border-radius: 14px; padding: 16px 20px; border: 1px solid var(--border); box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .stat-val { font-size: 24px; font-weight: 800; color: var(--purple); }
+    .stat-label { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"></div>
+      <div class="logo-text"><div class="name">SMAEK</div><div class="sub">Sistem Manajemen Ekskul</div></div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section"><div class="nav-section-label">Utama</div>
+        <a class="nav-item" href="/dashboard"><span class="ni"></span>Dashboard</a></div>
+      <div class="nav-section"><div class="nav-section-label">Manajemen</div>
+        <a class="nav-item" href="/anggota"><span class="ni"></span>Anggota</a>
+        <a class="nav-item" href="/disiplin"><span class="ni"></span>Disiplin</a>
+        <a class="nav-item" href="/pelanggaran"><span class="ni"></span>Pelanggaran</a></div>
+      <div class="nav-section"><div class="nav-section-label">Aktivitas</div>
+        <a class="nav-item" href="/latihan"><span class="ni"></span>Catatan Latihan</a>
+        <a class="nav-item" href="/riwayat"><span class="ni"></span>Riwayat Latihan</a></div>
+      <div class="nav-section"><div class="nav-section-label">Capaian</div>
+        <a class="nav-item" href="/prestasi"><span class="ni"></span>Prestasi</a></div>
+      <div class="nav-section"><div class="nav-section-label">Laporan</div>
+        <a class="nav-item active" href="/laporan"><span class="ni">📄</span>Laporan Anggota</a></div>
+    </nav>
+  </aside>
+  <div class="main">
+    <div class="page-top">
+      <h1>Laporan Anggota</h1>
+      <p>Rekap lengkap data seluruh anggota ekstrakurikuler</p>
+    </div>
+    <div class="page-body">
+      <!-- Statistik -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-val" th:text="${anggotaList.size()}">0</div><div class="stat-label">Total Anggota</div></div>
+        <div class="stat-card"><div class="stat-val" th:text="${prestasiList.size()}">0</div><div class="stat-label">Total Prestasi</div></div>
+        <div class="stat-card"><div class="stat-val" th:text="${disiplinList.size()}">0</div><div class="stat-label">Catatan Disiplin</div></div>
+        <div class="stat-card"><div class="stat-val" th:text="${pelanggaranList.size()}">0</div><div class="stat-label">Pelanggaran</div></div>
+      </div>
+
+      <!-- Tabel Anggota -->
+      <div class="section-title"> Data Anggota</div>
+      <div class="card"><div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Jenis</th><th>Disiplin</th><th>Bergabung</th></tr></thead>
+          <tbody>
+            <tr th:if="${anggotaList.isEmpty()}"><td colspan="6"><div class="empty"><p>Belum ada data anggota</p></div></td></tr>
+            <tr th:each="a, i : ${anggotaList}">
+              <td style="color:var(--text3)" th:text="${i.count}"></td>
+              <td><strong th:text="${a.nama}"></strong></td>
+              <td th:text="${a.kelas}"></td>
+              <td><span class="badge" th:classappend="${a.jenis == 'Anggota Inti'} ? 'badge-purple' : 'badge-gray'" th:text="${a.jenis}"></span></td>
+              <td><span class="badge" th:classappend="${a.disiplin == 'Baik'} ? 'badge-green' : (${a.disiplin == 'Kurang'} ? 'badge-red' : 'badge-yellow')" th:text="${a.disiplin}"></span></td>
+              <td style="font-size:12px;color:var(--text3)" th:text="${a.bergabung}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+
+      <!-- Tabel Prestasi -->
+      <div class="section-title"> Data Prestasi</div>
+      <div class="card"><div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Nama</th><th>Judul</th><th>Tingkat</th><th>Poin</th></tr></thead>
+          <tbody>
+            <tr th:if="${prestasiList.isEmpty()}"><td colspan="5"><div class="empty"><p>Belum ada data prestasi</p></div></td></tr>
+            <tr th:each="p, i : ${prestasiList}">
+              <td style="color:var(--text3)" th:text="${i.count}"></td>
+              <td><strong th:text="${p.nama}"></strong></td>
+              <td th:text="${p.judul}"></td>
+              <td><span class="badge badge-purple" th:text="${p.tingkat}"></span></td>
+              <td th:text="${p.poin}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+
+      <!-- Tabel Pelanggaran -->
+      <div class="section-title"> Data Pelanggaran</div>
+      <div class="card"><div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Jenis</th><th>Deskripsi</th><th>Tanggal</th></tr></thead>
+          <tbody>
+            <tr th:if="${pelanggaranList.isEmpty()}"><td colspan="6"><div class="empty"><p>Belum ada data pelanggaran</p></div></td></tr>
+            <tr th:each="p, i : ${pelanggaranList}">
+              <td style="color:var(--text3)" th:text="${i.count}"></td>
+              <td><strong th:text="${p.nama}"></strong></td>
+              <td th:text="${p.kelas}"></td>
+              <td><span class="badge" th:classappend="${p.jenis == 'Ringan'} ? 'badge-yellow' : (${p.jenis == 'Berat'} ? 'badge-red' : 'badge-gray')" th:text="${p.jenis}"></span></td>
+              <td style="color:var(--text2)" th:text="${p.deskripsi}"></td>
+              <td style="font-size:12px;color:var(--text3)" th:text="${p.tanggal}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<aside th:fragment="sidebar(activePage)" class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon"></div>
+    <div class="logo-text">
+      <div class="name">SMAEK</div>
+      <div class="sub">Sistem Manajemen Ekskul</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div class="nav-section">
+      <div class="nav-section-label">Utama</div>
+      <a class="nav-item" th:classappend="${activePage == 'dashboard'} ? ' active'" href="/dashboard">
+        <span class="ni"></span>Dashboard
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Manajemen</div>
+      <a class="nav-item" th:classappend="${activePage == 'anggota'} ? ' active'" href="/anggota">
+        <span class="ni"></span>Anggota
+      </a>
+      <a class="nav-item" th:classappend="${activePage == 'disiplin'} ? ' active'" href="/disiplin">
+        <span class="ni"></span>Disiplin
+      </a>
+      <a class="nav-item" th:classappend="${activePage == 'pelanggaran'} ? ' active'" href="/pelanggaran">
+        <span class="ni"></span>Pelanggaran
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Aktivitas</div>
+      <a class="nav-item" th:classappend="${activePage == 'latihan'} ? ' active'" href="/latihan">
+        <span class="ni"></span>Catatan Latihan
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Capaian</div>
+      <a class="nav-item" th:classappend="${activePage == 'prestasi'} ? ' active'" href="/prestasi">
+        <span class="ni"></span>Prestasi
+      </a>
+    </div>
+  </nav>
+</aside>
+
+</body>
+</html>
