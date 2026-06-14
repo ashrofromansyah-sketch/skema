@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kelola User — SMAEK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #6c63ff; --purple2: #857aff; --purple-light: #ede9ff; --purple-soft: rgba(108,99,255,0.1); --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --bg: #f1f3f8; --white: #ffffff; --border: #e5e7eb; --text: #1a1a2e; --text2: #6b7280; --text3: #9ca3af; --font: 'Poppins', sans-serif; --sidebar-w: 230px; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--white); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; box-shadow: 2px 0 12px rgba(0,0,0,.05); }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--purple), #9f7aea); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text .name { font-size: 15px; font-weight: 700; } .logo-text .sub { font-size: 10px; color: var(--text3); }
+    .nav { padding: 14px 12px; flex: 1; overflow-y: auto; } .nav-section { margin-bottom: 18px; }
+    .nav-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 10px; margin-bottom: 6px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text2); text-decoration: none; transition: all .15s; margin-bottom: 2px; }
+    .nav-item:hover { background: var(--purple-soft); color: var(--purple); }
+    .nav-item.active { background: var(--purple); color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(108,99,255,.35); }
+    .nav-item .ni { font-size: 16px; width: 20px; text-align: center; }
+    .main { margin-left: var(--sidebar-w); flex: 1; }
+    .page-top { background: linear-gradient(135deg, var(--purple), #9f7aea); padding: 28px 36px 60px; color: #fff; }
+    .page-top h1 { font-size: 22px; font-weight: 700; } .page-top p { font-size: 13px; opacity: .8; margin-top: 4px; }
+    .page-top-actions { display: flex; gap: 10px; margin-top: 16px; }
+    .page-body { padding: 0 36px 36px; margin-top: -40px; }
+    .btn { padding: 10px 18px; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .btn-primary { background: var(--purple); color: #fff; } .btn-primary:hover { background: var(--purple2); }
+    .btn-white { background: #fff; color: var(--purple); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
+    .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+    .btn-danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
+    .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 8px; }
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); }
+    .table-wrap { overflow-x: auto; border-radius: 16px; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; padding: 12px 18px; background: #fafafa; border-bottom: 1px solid var(--border); text-align: left; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; } tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--purple-soft); } tbody td { padding: 13px 18px; font-size: 13px; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .badge-purple { background: var(--purple-light); color: var(--purple); }
+    .badge-green { background: rgba(34,197,94,.12); color: var(--green); }
+    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
+    .badge-gray { background: #f3f4f6; color: var(--text3); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--white); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.2); padding: 32px; width: 480px; max-width: 100%; }
+    .modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 22px; }
+    .form-field { margin-bottom: 14px; }
+    .form-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+    .form-field input, .form-field select { width: 100%; padding: 11px 14px; background: #f9fafb; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
+    .form-field input:focus, .form-field select:focus { border-color: var(--purple); background: #fff; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: var(--white); border-radius: 12px; padding: 14px 20px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.15); transform: translateY(16px); opacity: 0; transition: all .25s; border-left: 4px solid var(--green); }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .logout-btn { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--red); text-decoration: none; margin: 12px; border: 1px solid rgba(239,68,68,.2); background: rgba(239,68,68,.05); transition: all .15s; }
+    .logout-btn:hover { background: rgba(239,68,68,.1); }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🎯</div>
+      <div class="logo-text"><div class="name">SMAEK</div><div class="sub">Sistem Manajemen Ekskul</div></div>
+    </div>
+    <nav class="nav">
+      <div class="nav-section"><div class="nav-section-label">Utama</div>
+        <a class="nav-item" href="/dashboard"><span class="ni">📊</span>Dashboard</a></div>
+      <div class="nav-section"><div class="nav-section-label">Manajemen</div>
+        <a class="nav-item" href="/anggota"><span class="ni">👥</span>Anggota</a>
+        <a class="nav-item" href="/disiplin"><span class="ni">📋</span>Disiplin</a>
+        <a class="nav-item" href="/pelanggaran"><span class="ni">⚠️</span>Pelanggaran</a></div>
+      <div class="nav-section"><div class="nav-section-label">Aktivitas</div>
+        <a class="nav-item" href="/latihan"><span class="ni">🏃</span>Catatan Latihan</a>
+        <a class="nav-item" href="/riwayat"><span class="ni">📅</span>Riwayat Latihan</a></div>
+      <div class="nav-section"><div class="nav-section-label">Capaian</div>
+        <a class="nav-item" href="/prestasi"><span class="ni">🏆</span>Prestasi</a></div>
+      <div class="nav-section"><div class="nav-section-label">Laporan</div>
+        <a class="nav-item" href="/laporan"><span class="ni">📄</span>Laporan Anggota</a></div>
+      <div class="nav-section"><div class="nav-section-label">Admin</div>
+        <a class="nav-item active" href="/admin/users"><span class="ni">👤</span>Kelola User</a></div>
+    </nav>
+    <a class="logout-btn" href="/logout">🚪 Logout</a>
+  </aside>
+  <div class="main">
+    <div class="page-top">
+      <h1>Kelola User</h1>
+      <p>Manajemen akun pengguna sistem</p>
+      <div class="page-top-actions">
+        <button class="btn btn-white" onclick="openModal('modalAdd')">+ Tambah User</button>
+      </div>
+    </div>
+    <div class="page-body">
+      <div th:if="${successMsg}" class="toast show" th:text="${successMsg}"></div>
+      <div th:if="${errorMsg}" class="toast show" style="border-left-color:var(--red)" th:text="${errorMsg}"></div>
+      <div class="card">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Username</th><th>Nama Lengkap</th><th>Role</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody>
+              <tr th:each="u, i : ${userList}">
+                <td style="color:var(--text3)" th:text="${i.count}"></td>
+                <td><strong th:text="${u.username}"></strong></td>
+                <td th:text="${u.namaLengkap}"></td>
+                <td>
+                  <span class="badge"
+                    th:classappend="${u.role == 'ADMIN'} ? 'badge-purple' : (${u.role == 'PEMBINA'} ? 'badge-yellow' : 'badge-green')"
+                    th:text="${u.role}"></span>
+                </td>
+                <td>
+                  <span class="badge" th:classappend="${u.aktif} ? 'badge-green' : 'badge-gray'" th:text="${u.aktif ? 'Aktif' : 'Nonaktif'}"></span>
+                </td>
+                <td>
+                  <form th:action="@{/admin/users/hapus/{id}(id=${u.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus user ini?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                  </form>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
+    <div class="modal">
+      <h2>Tambah User Baru</h2>
+      <form th:action="@{/admin/users/simpan}" method="post">
+        <input type="hidden" name="id"/>
+        <div class="form-field">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Username unik" required/>
+        </div>
+        <div class="form-field">
+          <label>Nama Lengkap</label>
+          <input type="text" name="namaLengkap" placeholder="Nama lengkap" required/>
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" name="passwordBaru" placeholder="Password" required/>
+        </div>
+        <div class="form-field">
+          <label>Role</label>
+          <select name="role">
+            <option value="USER">USER</option>
+            <option value="PEMBINA">PEMBINA</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  </script>
+</body>
+</html>

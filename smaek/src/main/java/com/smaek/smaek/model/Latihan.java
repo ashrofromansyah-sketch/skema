@@ -2,14 +2,25 @@ package com.smaek.smaek.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "latihan")
 public class Latihan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String judul;
     private LocalDate tanggal;
     private String lokasi;
-    private int durasi;        // menit
+    private int durasi;
     private String catatan;
-    private String status;     // Selesai, Batal, Dijadwalkan
+    private String status;
 
     public Latihan() {}
 

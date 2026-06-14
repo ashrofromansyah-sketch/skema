@@ -2,12 +2,23 @@ package com.smaek.smaek.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "pelanggaran")
 public class Pelanggaran {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long anggotaId;
     private String nama;
     private String kelas;
-    private String jenis;      // Ringan, Sedang, Berat
+    private String jenis;
     private String deskripsi;
     private LocalDate tanggal;
     private String sanksi;
