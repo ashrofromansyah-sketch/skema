@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<html lang="id" xmlns:th="http://www.thymeleaf.org" >
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Disiplin — SMAEK</title>
@@ -18,38 +18,38 @@
     .nav-item:hover { background: var(--purple-soft); color: var(--purple); }
     .nav-item.active { background: var(--purple); color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(108,99,255,.35); }
     .nav-item .ni { font-size: 16px; width: 20px; text-align: center; }
+    .sidebar-footer { border-top: 1px solid var(--border); padding: 12px; }
+    .user-info { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--purple-soft); margin-bottom: 8px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .user-name { font-size: 12px; font-weight: 600; color: var(--text); }
+    .user-role { font-size: 10px; color: var(--text3); margin-top: 1px; }
+    .logout-btn { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--red); text-decoration: none; border: 1px solid rgba(239,68,68,.2); background: rgba(239,68,68,.05); transition: all .15s; justify-content: center; }
+    .logout-btn:hover { background: rgba(239,68,68,.12); }
     .main { margin-left: var(--sidebar-w); flex: 1; }
     .page-top { background: linear-gradient(135deg, var(--purple), #9f7aea); padding: 28px 36px 60px; color: #fff; }
     .page-top h1 { font-size: 22px; font-weight: 700; } .page-top p { font-size: 13px; opacity: .8; margin-top: 4px; }
     .page-top-actions { display: flex; gap: 10px; margin-top: 16px; }
     .page-body { padding: 0 36px 36px; margin-top: -40px; }
     .btn { padding: 10px 18px; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
-    .btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 12px rgba(108,99,255,.3); }
-    .btn-primary:hover { background: var(--purple2); }
-    .btn-white { background: #fff; color: var(--purple); } .btn-white:hover { background: var(--purple-light); }
-    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); }
-    .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
+    .btn-primary { background: var(--purple); color: #fff; } .btn-primary:hover { background: var(--purple2); }
+    .btn-white { background: #fff; color: var(--purple); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); } .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
     .btn-danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
     .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 8px; }
     .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); }
     .table-wrap { overflow-x: auto; border-radius: 16px; }
     table { width: 100%; border-collapse: collapse; }
     thead th { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; padding: 12px 18px; background: #fafafa; border-bottom: 1px solid var(--border); text-align: left; }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--purple-soft); }
-    tbody td { padding: 13px 18px; font-size: 13px; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .12s; } tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--purple-soft); } tbody td { padding: 13px 18px; font-size: 13px; }
     .toolbar { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
     .search-box { flex: 1; min-width: 200px; position: relative; }
     .search-box input { width: 100%; padding: 10px 14px 10px 38px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
-    .search-box input:focus { border-color: var(--purple); }
     .search-box .si { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); }
     select.sel { padding: 10px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; cursor: pointer; }
     .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-    .badge-green { background: rgba(34,197,94,.12); color: var(--green); }
-    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
-    .badge-red { background: rgba(239,68,68,.12); color: var(--red); }
-    .badge-gray { background: #f3f4f6; color: var(--text3); }
+    .badge-green { background: rgba(34,197,94,.12); color: var(--green); } .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
+    .badge-red { background: rgba(239,68,68,.12); color: var(--red); } .badge-gray { background: #f3f4f6; color: var(--text3); }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal { background: var(--white); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.2); padding: 32px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
@@ -60,34 +60,46 @@
     .form-field input, .form-field select, .form-field textarea { width: 100%; padding: 11px 14px; background: #f9fafb; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
     .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--purple); background: #fff; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
-    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: var(--white); border-radius: 12px; padding: 14px 20px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.15); transform: translateY(16px); opacity: 0; transition: all .25s; border-left: 4px solid var(--purple); }
+    .toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: var(--white); border-radius: 12px; padding: 14px 20px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.15); transform: translateY(16px); opacity: 0; transition: all .25s; border-left: 4px solid var(--green); }
     .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { border-left-color: var(--green); }
-    .empty { text-align: center; padding: 50px 20px; }
-    .empty p { font-size: 13px; color: var(--text3); }
+    .empty { text-align: center; padding: 50px 20px; } .empty p { font-size: 13px; color: var(--text3); }
   </style>
 </head>
 <body>
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon"></div>
+      <div class="logo-icon">🎯</div>
       <div class="logo-text"><div class="name">SMAEK</div><div class="sub">Sistem Manajemen Ekskul</div></div>
     </div>
     <nav class="nav">
       <div class="nav-section"><div class="nav-section-label">Utama</div>
-        <a class="nav-item" href="/dashboard"><span class="ni"></span>Dashboard</a></div>
+        <a class="nav-item" href="/dashboard"><span class="ni">📊</span>Dashboard</a></div>
       <div class="nav-section"><div class="nav-section-label">Manajemen</div>
-        <a class="nav-item" href="/anggota"><span class="ni"></span>Anggota</a>
-        <a class="nav-item active" href="/disiplin"><span class="ni"></span>Disiplin</a>
-        <a class="nav-item" href="/pelanggaran"><span class="ni"></span>Pelanggaran</a></div>
+        <a class="nav-item" href="/anggota"><span class="ni">👥</span>Anggota</a>
+        <a class="nav-item active" href="/disiplin"><span class="ni">📋</span>Disiplin</a>
+        <a class="nav-item" href="/pelanggaran"><span class="ni">⚠️</span>Pelanggaran</a></div>
       <div class="nav-section"><div class="nav-section-label">Aktivitas</div>
-        <a class="nav-item" href="/latihan"><span class="ni"></span>Catatan Latihan</a>
-        <a class="nav-item" href="/riwayat"><span class="ni"></span>Riwayat Latihan</a></div>
+        <a class="nav-item" href="/latihan"><span class="ni">🏃</span>Catatan Latihan</a>
+        <a class="nav-item" href="/riwayat"><span class="ni">📅</span>Riwayat Latihan</a></div>
       <div class="nav-section"><div class="nav-section-label">Capaian</div>
-        <a class="nav-item" href="/prestasi"><span class="ni"></span>Prestasi</a></div>
+        <a class="nav-item" href="/prestasi"><span class="ni">🏆</span>Prestasi</a></div>
       <div class="nav-section"><div class="nav-section-label">Laporan</div>
-        <a class="nav-item" href="/laporan"><span class="ni"></span>Laporan Anggota</a></div>
+        <a class="nav-item" href="/laporan"><span class="ni">📄</span>Laporan Anggota</a></div>
+      <div class="nav-section"><div class="nav-section-label">Admin</div>
+        <a class="nav-item" href="/admin/users"><span class="ni">👤</span>Kelola User</a></div>
     </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" th:text="${#strings.substring(#authentication.name,0,1).toUpperCase()}">A</div>
+        <div>
+          <div class="user-name" th:text="${#authentication.name}">User</div>
+          
+          
+          <div class="user-role">Member</div>
+        </div>
+      </div>
+      <a class="logout-btn" href="/logout">🚪 Keluar</a>
+    </div>
   </aside>
   <div class="main">
     <div class="page-top">
@@ -98,83 +110,66 @@
       </div>
     </div>
     <div class="page-body">
-      <div th:if="${successMsg}" class="toast success show" th:text="${successMsg}"></div>
+      <div th:if="${successMsg}" class="toast show" th:text="${successMsg}"></div>
       <form th:action="@{/disiplin}" method="get">
         <div class="toolbar">
-          <div class="search-box"><span class="si"></span>
-            <input type="text" name="q" th:value="${q}" placeholder="Cari nama anggota..."/>
-          </div>
+          <div class="search-box"><span class="si">🔍</span>
+            <input type="text" name="q" th:value="${q}" placeholder="Cari nama anggota..."/></div>
           <select class="sel" name="status" onchange="this.form.submit()">
             <option value="">Semua Status</option>
-            <option value="Hadir"  th:selected="${status == 'Hadir'}">Hadir</option>
-            <option value="Izin"   th:selected="${status == 'Izin'}">Izin</option>
-            <option value="Sakit"  th:selected="${status == 'Sakit'}">Sakit</option>
-            <option value="Alpa"   th:selected="${status == 'Alpa'}">Alpa</option>
+            <option value="Hadir" th:selected="${status == 'Hadir'}">Hadir</option>
+            <option value="Izin" th:selected="${status == 'Izin'}">Izin</option>
+            <option value="Sakit" th:selected="${status == 'Sakit'}">Sakit</option>
+            <option value="Alpa" th:selected="${status == 'Alpa'}">Alpa</option>
           </select>
           <button type="submit" class="btn btn-primary">Cari</button>
         </div>
       </form>
-      <div class="card">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Tanggal</th><th>Status</th><th>Keterangan</th><th>Aksi</th></tr></thead>
-            <tbody>
-              <tr th:if="${disiplinList.isEmpty()}"><td colspan="7"><div class="empty"><p> Belum ada catatan disiplin</p></div></td></tr>
-              <tr th:each="d, i : ${disiplinList}">
-                <td style="color:var(--text3)" th:text="${i.count}"></td>
-                <td><strong th:text="${d.nama}"></strong></td>
-                <td th:text="${d.kelas}"></td>
-                <td style="font-size:12px;color:var(--text3)" th:text="${d.tanggal}"></td>
-                <td>
-                  <span class="badge"
-                    th:classappend="${d.status == 'Hadir'} ? 'badge-green' : (${d.status == 'Alpa'} ? 'badge-red' : 'badge-yellow')"
-                    th:text="${d.status}"></span>
-                </td>
-                <td style="color:var(--text2)" th:text="${d.keterangan}"></td>
-                <td>
-                  <form th:action="@{/disiplin/hapus/{id}(id=${d.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus catatan ini?')">
-                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                  </form>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <div class="card"><div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Tanggal</th><th>Status</th><th>Keterangan</th><th>Aksi</th></tr></thead>
+          <tbody>
+            <tr th:if="${disiplinList.isEmpty()}"><td colspan="7"><div class="empty"><p>📋 Belum ada catatan disiplin</p></div></td></tr>
+            <tr th:each="d, i : ${disiplinList}">
+              <td style="color:var(--text3)" th:text="${i.count}"></td>
+              <td><strong th:text="${d.nama}"></strong></td>
+              <td th:text="${d.kelas}"></td>
+              <td style="font-size:12px;color:var(--text3)" th:text="${d.tanggal}"></td>
+              <td><span class="badge" th:classappend="${d.status == 'Hadir'} ? 'badge-green' : (${d.status == 'Alpa'} ? 'badge-red' : 'badge-yellow')" th:text="${d.status}"></span></td>
+              <td style="color:var(--text2)" th:text="${d.keterangan}"></td>
+              <td>
+                <form th:action="@{/disiplin/hapus/{id}(id=${d.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus catatan ini?')">
+                  <button type="submit" class="btn btn-danger btn-sm">🗑️ Hapus</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div></div>
     </div>
   </div>
   <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
     <div class="modal">
       <h2>Tambah Catatan Disiplin</h2>
       <form th:action="@{/disiplin/simpan}" method="post">
-        <div class="form-row">
-          <div class="form-field" style="grid-column:1/-1">
-            <label>Anggota</label>
-            <select name="anggotaId" required>
-              <option value="">-- Pilih Anggota --</option>
-              <option th:each="a : ${anggotaList}" th:value="${a.id}" th:text="${a.nama + ' (' + a.kelas + ')'}"></option>
-            </select>
-          </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label>Anggota</label>
+          <select name="anggotaId" required>
+            <option value="">-- Pilih Anggota --</option>
+            <option th:each="a : ${anggotaList}" th:value="${a.id}" th:text="${a.nama + ' (' + a.kelas + ')'}"></option>
+          </select>
         </div>
         <div class="form-row">
           <div class="form-field">
             <label>Status</label>
             <select name="status">
-              <option value="Hadir">Hadir</option>
-              <option value="Izin">Izin</option>
-              <option value="Sakit">Sakit</option>
-              <option value="Alpa">Alpa</option>
+              <option value="Hadir">Hadir</option><option value="Izin">Izin</option>
+              <option value="Sakit">Sakit</option><option value="Alpa">Alpa</option>
             </select>
           </div>
-          <div class="form-field">
-            <label>Tanggal</label>
-            <input type="date" name="tanggal" required/>
-          </div>
+          <div class="form-field"><label>Tanggal</label><input type="date" name="tanggal" required/></div>
         </div>
-        <div class="form-field">
-          <label>Keterangan</label>
-          <textarea name="keterangan" rows="2" placeholder="Keterangan tambahan..."></textarea>
-        </div>
+        <div class="form-field"><label>Keterangan</label><textarea name="keterangan" rows="2" placeholder="Keterangan tambahan..."></textarea></div>
         <div class="modal-actions">
           <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
@@ -184,12 +179,9 @@
   </div>
   <div class="toast" id="toast"></div>
   <script>
-    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-    window.onload = function() {
-      const t = document.getElementById('toast');
-      if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
-    }
+    window.onload = function() { const t = document.getElementById('toast'); if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); } }
   </script>
 </body>
 </html>

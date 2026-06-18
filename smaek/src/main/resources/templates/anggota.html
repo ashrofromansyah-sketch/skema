@@ -4,70 +4,43 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Anggota — SMAEK</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --purple: #6c63ff; --purple2: #857aff; --purple-light: #ede9ff;
-      --purple-soft: rgba(108,99,255,0.1); --accent2: #ff6584;
+      --purple-soft: rgba(108,99,255,0.1);
       --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --blue: #3b82f6;
       --bg: #f1f3f8; --white: #ffffff; --border: #e5e7eb;
       --text: #1a1a2e; --text2: #6b7280; --text3: #9ca3af;
-      --font: 'Poppins', sans-serif;
-      --sidebar-w: 230px;
+      --font: 'Poppins', sans-serif; --sidebar-w: 230px;
     }
     body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: var(--sidebar-w); min-height: 100vh; background: var(--white);
-      border-right: 1px solid var(--border); display: flex; flex-direction: column;
-      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
-      box-shadow: 2px 0 12px rgba(0,0,0,.05);
-    }
-    .sidebar-logo {
-      display: flex; align-items: center; gap: 10px;
-      padding: 22px 20px 18px; border-bottom: 1px solid var(--border);
-    }
-    .logo-icon {
-      width: 38px; height: 38px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--purple), #9f7aea);
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
-    }
+    .sidebar { width: var(--sidebar-w); min-height: 100vh; background: var(--white); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; box-shadow: 2px 0 12px rgba(0,0,0,.05); }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
+    .logo-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--purple), #9f7aea); display: flex; align-items: center; justify-content: center; font-size: 18px; }
     .logo-text .name { font-size: 15px; font-weight: 700; color: var(--text); }
     .logo-text .sub  { font-size: 10px; color: var(--text3); margin-top: 1px; }
-
     .nav { padding: 14px 12px; flex: 1; overflow-y: auto; }
     .nav-section { margin-bottom: 18px; }
-    .nav-section-label {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .1em; color: var(--text3); padding: 0 10px; margin-bottom: 6px;
-    }
-    .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500;
-      color: var(--text2); text-decoration: none; transition: all .15s; margin-bottom: 2px;
-    }
+    .nav-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 10px; margin-bottom: 6px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text2); text-decoration: none; transition: all .15s; margin-bottom: 2px; }
     .nav-item:hover { background: var(--purple-soft); color: var(--purple); }
     .nav-item.active { background: var(--purple); color: #fff; font-weight: 600; box-shadow: 0 4px 12px rgba(108,99,255,.35); }
     .nav-item .ni { font-size: 16px; width: 20px; text-align: center; }
-
-    /* ── MAIN ── */
+    .sidebar-footer { border-top: 1px solid var(--border); padding: 12px; }
+    .user-info { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--purple-soft); margin-bottom: 8px; }
+    .user-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .user-name { font-size: 12px; font-weight: 600; color: var(--text); }
+    .user-role { font-size: 10px; color: var(--text3); margin-top: 1px; }
+    .logout-btn { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--red); text-decoration: none; border: 1px solid rgba(239,68,68,.2); background: rgba(239,68,68,.05); transition: all .15s; justify-content: center; }
+    .logout-btn:hover { background: rgba(239,68,68,.12); }
     .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
-
-    /* Page Top */
-    .page-top {
-      background: linear-gradient(135deg, var(--purple), #9f7aea);
-      padding: 28px 36px 60px; color: #fff;
-    }
+    .page-top { background: linear-gradient(135deg, var(--purple), #9f7aea); padding: 28px 36px 60px; color: #fff; }
     .page-top h1 { font-size: 22px; font-weight: 700; }
     .page-top p  { font-size: 13px; opacity: .8; margin-top: 4px; }
     .page-top-actions { display: flex; gap: 10px; margin-top: 16px; }
-
     .page-body { padding: 0 36px 36px; margin-top: -40px; }
-
-    /* Buttons */
     .btn { padding: 10px 18px; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-primary { background: var(--purple); color: #fff; box-shadow: 0 4px 12px rgba(108,99,255,.3); }
     .btn-primary:hover { background: var(--purple2); }
@@ -77,8 +50,6 @@
     .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
     .btn-danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
     .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 8px; }
-
-    /* Card & Table */
     .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); }
     .table-wrap { overflow-x: auto; border-radius: 16px; }
     table { width: 100%; border-collapse: collapse; }
@@ -87,22 +58,18 @@
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: var(--purple-soft); }
     tbody td { padding: 13px 18px; font-size: 13px; }
-
-    /* Toolbar */
     .toolbar { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; flex-wrap: wrap; }
     .search-box { flex: 1; min-width: 200px; position: relative; }
     .search-box input { width: 100%; padding: 10px 14px 10px 38px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
     .search-box input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(108,99,255,.1); }
     .search-box .si { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); }
     select.sel { padding: 10px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; cursor: pointer; }
-
-    /* Badges */
     .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     .badge-purple { background: var(--purple-light); color: var(--purple); }
     .badge-green  { background: rgba(34,197,94,.12); color: var(--green); }
+    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); }
+    .badge-red    { background: rgba(239,68,68,.12); color: var(--red); }
     .badge-gray   { background: #f3f4f6; color: var(--text3); }
-
-    /* Modal */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal { background: var(--white); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.2); padding: 32px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
@@ -113,24 +80,18 @@
     .form-field input, .form-field select { width: 100%; padding: 11px 14px; background: #f9fafb; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; }
     .form-field input:focus, .form-field select:focus { border-color: var(--purple); background: #fff; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); }
-
-    /* Toast */
     .toast { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: var(--white); border-radius: 12px; padding: 14px 20px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,.15); transform: translateY(16px); opacity: 0; transition: all .25s; border-left: 4px solid var(--purple); }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.success { border-left-color: var(--green); }
     .toast.error   { border-left-color: var(--red); }
-
-    /* Empty */
     .empty { text-align: center; padding: 50px 20px; }
     .empty p { font-size: 13px; color: var(--text3); }
   </style>
 </head>
 <body>
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon"></div>
+      <div class="logo-icon">🎯</div>
       <div class="logo-text">
         <div class="name">SMAEK</div>
         <div class="sub">Sistem Manajemen Ekskul</div>
@@ -139,54 +100,61 @@
     <nav class="nav">
       <div class="nav-section">
         <div class="nav-section-label">Utama</div>
-        <a class="nav-item" href="/dashboard"><span class="ni"></span>Dashboard</a>
+        <a class="nav-item" href="/dashboard"><span class="ni">📊</span>Dashboard</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Manajemen</div>
-        <a class="nav-item active" href="/anggota"><span class="ni"></span>Anggota</a>
-        <a class="nav-item" href="/disiplin"><span class="ni"></span>Disiplin</a>
-        <a class="nav-item" href="/pelanggaran"><span class="ni"></span>Pelanggaran</a>
+        <a class="nav-item active" href="/anggota"><span class="ni">👥</span>Anggota</a>
+        <a class="nav-item" href="/disiplin"><span class="ni">📋</span>Disiplin</a>
+        <a class="nav-item" href="/pelanggaran"><span class="ni">⚠️</span>Pelanggaran</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Aktivitas</div>
-        <a class="nav-item" href="/latihan"><span class="ni"></span>Catatan Latihan</a>
-        <a class="nav-item" href="/riwayat"><span class="ni"></span>Riwayat Latihan</a>
+        <a class="nav-item" href="/latihan"><span class="ni">🏃</span>Catatan Latihan</a>
+        <a class="nav-item" href="/riwayat"><span class="ni">📅</span>Riwayat Latihan</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Capaian</div>
-        <a class="nav-item" href="/prestasi"><span class="ni"></span>Prestasi</a>
+        <a class="nav-item" href="/prestasi"><span class="ni">🏆</span>Prestasi</a>
       </div>
       <div class="nav-section">
         <div class="nav-section-label">Laporan</div>
-        <a class="nav-item" href="/laporan"><span class="ni"></span>Laporan Anggota</a>
+        <a class="nav-item" href="/laporan"><span class="ni">📄</span>Laporan Anggota</a>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Admin</div>
+        <a class="nav-item" href="/admin/users"><span class="ni">👤</span>Kelola User</a>
       </div>
     </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" th:text="${#strings.substring(#authentication.name,0,1).toUpperCase()}">A</div>
+        <div>
+          <div class="user-name" th:text="${#authentication.name}">User</div>
+          <div class="user-role">Member</div>
+        </div>
+      </div>
+      <a class="logout-btn" href="/logout">🚪 Keluar</a>
+    </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
   <div class="main">
-
-    <!-- Page Header -->
     <div class="page-top">
       <h1>Anggota</h1>
       <p>Kelola data anggota ekstrakurikuler</p>
       <div class="page-top-actions">
-        <a th:href="@{/anggota/export-csv}" class="btn btn-white">↓ Export CSV</a>
-        <button class="btn btn-white" onclick="openModal('modalAdd')">+ Tambah Anggota</button>
+        <button class="btn btn-white" onclick="openAddModal()">+ Tambah Anggota</button>
       </div>
     </div>
 
     <div class="page-body">
-
-      <!-- Notifikasi -->
       <div th:if="${successMsg}" class="toast success show" th:text="${successMsg}"></div>
       <div th:if="${errorMsg}"   class="toast error show"   th:text="${errorMsg}"></div>
 
-      <!-- Toolbar Filter -->
       <form th:action="@{/anggota}" method="get">
         <div class="toolbar">
           <div class="search-box">
-            <span class="si"></span>
+            <span class="si">🔍</span>
             <input type="text" name="q" th:value="${q}" placeholder="Cari nama atau kelas..."/>
           </div>
           <select class="sel" name="jenis" onchange="this.form.submit()">
@@ -205,63 +173,36 @@
         </div>
       </form>
 
-      <!-- Tabel Anggota -->
       <div class="card">
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Nama</th>
-                <th>Kelas</th>
-                <th>Jenis</th>
-                <th>Disiplin</th>
-                <th>Bonus</th>
-                <th>Bergabung</th>
-                <th>Aksi</th>
+                <th>#</th><th>Nama</th><th>Kelas</th><th>Jenis</th>
+                <th>Disiplin</th><th>Bonus</th><th>Bergabung</th><th>Aksi</th>
               </tr>
             </thead>
             <tbody>
               <tr th:if="${anggotaList.isEmpty()}">
-                <td colspan="8">
-                  <div class="empty">
-                    <p> Tidak ada anggota ditemukan</p>
-                  </div>
-                </td>
+                <td colspan="8"><div class="empty"><p>👥 Tidak ada anggota ditemukan</p></div></td>
               </tr>
               <tr th:each="a, i : ${anggotaList}">
                 <td style="color:var(--text3)" th:text="${i.count}"></td>
                 <td><strong th:text="${a.nama}"></strong></td>
                 <td th:text="${a.kelas}"></td>
-                <td>
-                  <span class="badge"
-                    th:classappend="${a.jenis == 'Anggota Inti'} ? 'badge-purple' : 'badge-gray'"
-                    th:text="${a.jenis}">
-                  </span>
-                </td>
-                <td>
-                  <span class="badge"
-                    th:classappend="${a.disiplin == 'Baik'} ? 'badge-green' : (${a.disiplin == 'Kurang'} ? 'badge-red' : 'badge-yellow')"
-                    th:text="${a.disiplin}">
-                  </span>
-                </td>
-                <td>
-                  <span class="badge"
-                    th:classappend="${a.bonus == 'Ya'} ? 'badge-green' : 'badge-gray'"
-                    th:text="${a.bonus}">
-                  </span>
-                </td>
+                <td><span class="badge" th:classappend="${a.jenis == 'Anggota Inti'} ? 'badge-purple' : 'badge-gray'" th:text="${a.jenis}"></span></td>
+                <td><span class="badge" th:classappend="${a.disiplin == 'Baik'} ? 'badge-green' : (${a.disiplin == 'Kurang'} ? 'badge-red' : 'badge-yellow')" th:text="${a.disiplin}"></span></td>
+                <td><span class="badge" th:classappend="${a.bonus == 'Ya'} ? 'badge-green' : 'badge-gray'" th:text="${a.bonus}"></span></td>
                 <td style="font-size:12px;color:var(--text3)" th:text="${a.bergabung}"></td>
                 <td>
                   <div style="display:flex;gap:6px">
                     <button class="btn btn-ghost btn-sm"
-                      th:onclick="'editAnggota(' + ${a.id} + ', \'' + ${a.nama} + '\', \'' + ${a.kelas} + '\', \'' + ${a.jenis} + '\', \'' + ${a.disiplin} + '\', \'' + ${a.bonus} + '\', \'' + ${a.bergabung} + '\')'">
-                      Edit
+                      th:attr="data-id=${a.id}, data-nama=${a.nama}, data-kelas=${a.kelas}, data-jenis=${a.jenis}, data-disiplin=${a.disiplin}, data-bonus=${a.bonus}, data-bergabung=${a.bergabung}"
+                      onclick="editAnggotaFromBtn(this)">
+                      ✏️ Edit
                     </button>
-                    <form th:action="@{/anggota/hapus/{id}(id=${a.id})}" method="post" style="display:inline"
-                      onsubmit="return confirm('Hapus anggota ini?')">
-                      <input type="hidden" name="_method" value="DELETE"/>
-                      <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    <form th:action="@{/anggota/hapus/{id}(id=${a.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus anggota ini?')">
+                      <button type="submit" class="btn btn-danger btn-sm">🗑️ Hapus</button>
                     </form>
                   </div>
                 </td>
@@ -273,7 +214,6 @@
     </div>
   </div>
 
-  <!-- Modal Tambah/Edit Anggota -->
   <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
     <div class="modal">
       <h2 id="modalTitle">Tambah Anggota</h2>
@@ -320,7 +260,7 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
+          <button type="button" class="btn btn-ghost" onclick="resetModal()">Batal</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
@@ -333,6 +273,32 @@
     function openModal(id)  { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
+    // Mengosongkan semua field form (dipanggil sebelum tambah baru ATAU saat batal)
+    function resetFields() {
+      document.getElementById('modalTitle').textContent = 'Tambah Anggota';
+      document.getElementById('editId').value = '';
+      document.getElementById('fNama').value = '';
+      document.getElementById('fKelas').value = '';
+      document.getElementById('fJenis').value = 'Anggota Inti';
+      document.getElementById('fDisiplin').value = 'Baik';
+      document.getElementById('fBonus').value = 'Ya';
+      document.getElementById('fBergabung').value = '';
+    }
+
+    // Dipanggil saat klik tombol "Batal" di dalam modal
+    function resetModal() {
+      resetFields();
+      closeModal('modalAdd');
+    }
+
+    // Dipanggil saat klik tombol "+ Tambah Anggota" -> WAJIB reset dulu
+    // supaya editId kosong dan submit jadi INSERT baru, bukan menimpa data lama
+    function openAddModal() {
+      resetFields();
+      openModal('modalAdd');
+    }
+
+    // Mengisi form dengan data anggota yang dipilih untuk diedit
     function editAnggota(id, nama, kelas, jenis, disiplin, bonus, bergabung) {
       document.getElementById('modalTitle').textContent = 'Edit Anggota';
       document.getElementById('editId').value     = id;
@@ -341,8 +307,22 @@
       document.getElementById('fJenis').value     = jenis;
       document.getElementById('fDisiplin').value  = disiplin;
       document.getElementById('fBonus').value     = bonus;
-      document.getElementById('fBergabung').value = bergabung !== 'null' ? bergabung : '';
+      document.getElementById('fBergabung').value = (bergabung && bergabung !== 'null') ? bergabung : '';
       openModal('modalAdd');
+    }
+
+    // Membaca data-* attribute dari tombol Edit (lebih aman daripada concat string
+    // di th:onclick, karena tidak rusak kalau nama anggota mengandung tanda kutip)
+    function editAnggotaFromBtn(btn) {
+      editAnggota(
+        btn.dataset.id,
+        btn.dataset.nama,
+        btn.dataset.kelas,
+        btn.dataset.jenis,
+        btn.dataset.disiplin,
+        btn.dataset.bonus,
+        btn.dataset.bergabung
+      );
     }
 
     window.onload = function() {
