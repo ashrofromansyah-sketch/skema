@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" xmlns:th="http://www.thymeleaf.org" >
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Prestasi — SMAEK</title>
@@ -21,21 +21,25 @@
     .sidebar-footer { border-top: 1px solid var(--border); padding: 12px; }
     .user-info { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--purple-soft); margin-bottom: 8px; }
     .user-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-    .user-name { font-size: 12px; font-weight: 600; color: var(--text); }
-    .user-role { font-size: 10px; color: var(--text3); margin-top: 1px; }
+    .user-name { font-size: 12px; font-weight: 600; } .user-role { font-size: 10px; color: var(--text3); }
     .logout-btn { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--red); text-decoration: none; border: 1px solid rgba(239,68,68,.2); background: rgba(239,68,68,.05); transition: all .15s; justify-content: center; }
     .logout-btn:hover { background: rgba(239,68,68,.12); }
     .main { margin-left: var(--sidebar-w); flex: 1; }
-    .page-top { padding: 28px 36px 60px; color: #fff; }
+    .page-top { background: linear-gradient(135deg, var(--purple), #9f7aea); padding: 28px 36px 60px; color: #fff; }
     .page-top h1 { font-size: 22px; font-weight: 700; } .page-top p { font-size: 13px; opacity: .8; margin-top: 4px; }
     .page-top-actions { display: flex; gap: 10px; margin-top: 16px; }
     .page-body { padding: 0 36px 36px; margin-top: -40px; }
     .btn { padding: 10px 18px; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all .15s; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
     .btn-primary { background: var(--purple); color: #fff; } .btn-primary:hover { background: var(--purple2); }
-    .btn-white { background: #fff; color: var(--purple); } .btn-white:hover { background: var(--purple-light); }
+    .btn-white { background: #fff; color: var(--purple); }
     .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text2); } .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
     .btn-danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); color: var(--red); }
     .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 8px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 22px; }
+    .stat-card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); padding: 20px 22px; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--purple), #ff6584); }
+    .stat-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+    .stat-value { font-size: 30px; font-weight: 700; color: var(--text); }
     .card { background: var(--white); border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border: 1px solid var(--border); }
     .table-wrap { overflow-x: auto; border-radius: 16px; }
     table { width: 100%; border-collapse: collapse; }
@@ -49,8 +53,7 @@
     select.sel { padding: 10px 14px; background: var(--white); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: var(--font); font-size: 13px; outline: none; cursor: pointer; }
     .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     .badge-purple { background: var(--purple-light); color: var(--purple); } .badge-green { background: rgba(34,197,94,.12); color: var(--green); }
-    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); } .badge-red { background: rgba(239,68,68,.12); color: var(--red); }
-    .badge-blue { background: rgba(59,130,246,.12); color: var(--blue); } .badge-gray { background: #f3f4f6; color: var(--text3); }
+    .badge-yellow { background: rgba(245,158,11,.12); color: var(--yellow); } .badge-blue { background: rgba(59,130,246,.12); color: var(--blue); } .badge-gray { background: #f3f4f6; color: var(--text3); }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.4); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .2s; padding: 20px; }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal { background: var(--white); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,.2); padding: 32px; width: 520px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
@@ -94,40 +97,26 @@
         <div class="user-avatar" th:text="${#strings.substring(#authentication.name,0,1).toUpperCase()}">A</div>
         <div>
           <div class="user-name" th:text="${#authentication.name}">User</div>
-          
-          
-          <div class="user-role">Member</div>
+          <div class="user-role" th:text="${isEditor} ? 'Editor' : 'Viewer'">Role</div>
         </div>
       </div>
       <a class="logout-btn" href="/logout">🚪 Keluar</a>
     </div>
   </aside>
   <div class="main">
-    <div class="page-top" style="background:linear-gradient(135deg,var(--purple),#9f7aea)">
+    <div class="page-top">
       <h1>Prestasi</h1>
       <p>Rekap pencapaian dan tingkat prestasi anggota</p>
-      <div class="page-top-actions">
-        <button class="btn btn-white" onclick="openModal('modalAdd')">+ Tambah Prestasi</button>
+      <div class="page-top-actions" th:if="${isEditor}">
+        <button class="btn btn-white" id="btnTambah">+ Tambah Prestasi</button>
       </div>
     </div>
     <div class="page-body">
       <div th:if="${successMsg}" class="toast show" th:text="${successMsg}"></div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px">
-        <div class="card" style="padding:20px 22px;position:relative;overflow:hidden">
-          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),#ff6584)"></div>
-          <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Total Prestasi</div>
-          <div style="font-size:30px;font-weight:700" th:text="${prestasiList.size()}">0</div>
-        </div>
-        <div class="card" style="padding:20px 22px;position:relative;overflow:hidden">
-          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),#ff6584)"></div>
-          <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Total Poin</div>
-          <div style="font-size:30px;font-weight:700" th:text="${totalPoin}">0</div>
-        </div>
-        <div class="card" style="padding:20px 22px;position:relative;overflow:hidden">
-          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),#ff6584)"></div>
-          <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px">Total Anggota</div>
-          <div style="font-size:30px;font-weight:700" th:text="${anggotaList.size()}">0</div>
-        </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total Prestasi</div><div class="stat-value" th:text="${prestasiList.size()}">0</div></div>
+        <div class="stat-card"><div class="stat-label">Total Poin</div><div class="stat-value" th:text="${totalPoin}">0</div></div>
+        <div class="stat-card"><div class="stat-label">Total Anggota</div><div class="stat-value" th:text="${anggotaList.size()}">0</div></div>
       </div>
       <form th:action="@{/prestasi}" method="get">
         <div class="toolbar">
@@ -147,7 +136,7 @@
       </form>
       <div class="card"><div class="table-wrap">
         <table>
-          <thead><tr><th>#</th><th>Nama</th><th>Judul</th><th>Tanggal</th><th>Tingkat</th><th>Poin</th><th>Aksi</th></tr></thead>
+          <thead><tr><th>#</th><th>Nama</th><th>Judul</th><th>Tanggal</th><th>Tingkat</th><th>Poin</th><th th:if="${isEditor}">Aksi</th></tr></thead>
           <tbody>
             <tr th:if="${prestasiList.isEmpty()}"><td colspan="7"><div class="empty"><p>🏆 Belum ada prestasi</p></div></td></tr>
             <tr th:each="p, i : ${prestasiList}">
@@ -157,9 +146,13 @@
               <td style="font-size:12px;color:var(--text3)" th:text="${p.tanggal}"></td>
               <td><span class="badge" th:classappend="${p.tingkat == 'Internasional' or p.tingkat == 'Nasional'} ? 'badge-green' : (${p.tingkat == 'Provinsi'} ? 'badge-yellow' : (${p.tingkat == 'Kota' or p.tingkat == 'Kecamatan'} ? 'badge-blue' : 'badge-gray'))" th:text="${p.tingkat}"></span></td>
               <td style="font-size:14px;font-weight:700;color:var(--purple)" th:text="${p.poin}"></td>
-              <td>
+              <td th:if="${isEditor}">
                 <div style="display:flex;gap:6px">
-                  <button class="btn btn-ghost btn-sm" th:onclick="'editPrestasi(' + ${p.id} + ', ' + ${p.anggotaId} + ', '' + ${p.judul} + '', '' + ${p.tanggal} + '', '' + ${p.tingkat} + '', ' + ${p.poin} + ', '' + ${p.keterangan} + '')'" >✏️ Edit</button>
+                  <button class="btn btn-ghost btn-sm btn-edit"
+                    th:data-id="${p.id}" th:data-anggotaid="${p.anggotaId}"
+                    th:data-judul="${p.judul}" th:data-tanggal="${p.tanggal}"
+                    th:data-tingkat="${p.tingkat}" th:data-poin="${p.poin}"
+                    th:data-keterangan="${p.keterangan}">✏️ Edit</button>
                   <form th:action="@{/prestasi/hapus/{id}(id=${p.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus prestasi ini?')">
                     <button type="submit" class="btn btn-danger btn-sm">🗑️ Hapus</button>
                   </form>
@@ -171,7 +164,7 @@
       </div></div>
     </div>
   </div>
-  <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
+  <div class="modal-overlay" id="modalAdd">
     <div class="modal">
       <h2 id="modalTitle">Tambah Prestasi</h2>
       <form th:action="@{/prestasi/simpan}" method="post">
@@ -195,7 +188,7 @@
         <div class="form-field"><label>Poin</label><input type="number" id="fPoin" name="poin" value="100"/></div>
         <div class="form-field"><label>Keterangan</label><textarea id="fKet" name="keterangan" rows="2" placeholder="Keterangan tambahan..."></textarea></div>
         <div class="modal-actions">
-          <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
+          <button type="button" class="btn btn-ghost" id="btnBatal">Batal</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
@@ -203,25 +196,41 @@
   </div>
   <div class="toast" id="toast"></div>
   <script>
-    const POIN = {Sekolah:50, Kecamatan:75, Kota:100, Provinsi:200, Nasional:500, Internasional:1000};
-    function openModal(id) { document.getElementById(id).classList.add('open'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-    function autoPoin() { const t = document.getElementById('fTingkat').value; document.getElementById('fPoin').value = POIN[t] || 100; }
-    function editPrestasi(id, anggotaId, judul, tanggal, tingkat, poin, ket) {
-      document.getElementById('modalTitle').textContent = 'Edit Prestasi';
-      document.getElementById('editId').value = id;
-      document.getElementById('fAnggota').value = anggotaId;
-      document.getElementById('fJudul').value = judul;
-      document.getElementById('fTanggal').value = tanggal !== 'null' ? tanggal : '';
-      document.getElementById('fTingkat').value = tingkat;
-      document.getElementById('fPoin').value = poin;
-      document.getElementById('fKet').value = ket !== 'null' ? ket : '';
-      openModal('modalAdd');
-    }
-    window.onload = function() {
-      const t = document.getElementById('toast');
-      if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
-    }
+    var POIN = {Sekolah:50,Kecamatan:75,Kota:100,Provinsi:200,Nasional:500,Internasional:1000};
+    var modal = document.getElementById('modalAdd');
+    function openModal() { modal.classList.add('open'); }
+    function closeModal() { modal.classList.remove('open'); }
+    function autoPoin() { var t = document.getElementById('fTingkat').value; document.getElementById('fPoin').value = POIN[t] || 100; }
+    var btnTambah = document.getElementById('btnTambah');
+    if (btnTambah) btnTambah.addEventListener('click', function() {
+      document.getElementById('modalTitle').textContent = 'Tambah Prestasi';
+      document.getElementById('editId').value = '';
+      document.getElementById('fJudul').value = '';
+      document.getElementById('fTanggal').value = '';
+      document.getElementById('fTingkat').value = 'Sekolah';
+      document.getElementById('fPoin').value = '50';
+      document.getElementById('fKet').value = '';
+      openModal();
+    });
+    var btnBatal = document.getElementById('btnBatal');
+    if (btnBatal) btnBatal.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    document.querySelectorAll('.btn-edit').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.getElementById('modalTitle').textContent = 'Edit Prestasi';
+        document.getElementById('editId').value = btn.getAttribute('data-id');
+        document.getElementById('fAnggota').value = btn.getAttribute('data-anggotaid');
+        document.getElementById('fJudul').value = btn.getAttribute('data-judul');
+        var t = btn.getAttribute('data-tanggal');
+        document.getElementById('fTanggal').value = (t && t !== 'null') ? t : '';
+        document.getElementById('fTingkat').value = btn.getAttribute('data-tingkat');
+        document.getElementById('fPoin').value = btn.getAttribute('data-poin');
+        var k = btn.getAttribute('data-keterangan');
+        document.getElementById('fKet').value = (k && k !== 'null') ? k : '';
+        openModal();
+      });
+    });
+    window.onload = function() { var t = document.getElementById('toast'); if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 3000); } }
   </script>
 </body>
 </html>

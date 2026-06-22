@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" xmlns:th="http://www.thymeleaf.org" >
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Disiplin — SMAEK</title>
@@ -21,8 +21,7 @@
     .sidebar-footer { border-top: 1px solid var(--border); padding: 12px; }
     .user-info { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: var(--purple-soft); margin-bottom: 8px; }
     .user-avatar { width: 32px; height: 32px; border-radius: 8px; background: var(--purple); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-    .user-name { font-size: 12px; font-weight: 600; color: var(--text); }
-    .user-role { font-size: 10px; color: var(--text3); margin-top: 1px; }
+    .user-name { font-size: 12px; font-weight: 600; } .user-role { font-size: 10px; color: var(--text3); }
     .logout-btn { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--red); text-decoration: none; border: 1px solid rgba(239,68,68,.2); background: rgba(239,68,68,.05); transition: all .15s; justify-content: center; }
     .logout-btn:hover { background: rgba(239,68,68,.12); }
     .main { margin-left: var(--sidebar-w); flex: 1; }
@@ -93,9 +92,7 @@
         <div class="user-avatar" th:text="${#strings.substring(#authentication.name,0,1).toUpperCase()}">A</div>
         <div>
           <div class="user-name" th:text="${#authentication.name}">User</div>
-          
-          
-          <div class="user-role">Member</div>
+          <div class="user-role" th:text="${isEditor} ? 'Editor' : 'Viewer'">Role</div>
         </div>
       </div>
       <a class="logout-btn" href="/logout">🚪 Keluar</a>
@@ -105,8 +102,8 @@
     <div class="page-top">
       <h1>Disiplin</h1>
       <p>Kelola catatan kehadiran dan disiplin anggota</p>
-      <div class="page-top-actions">
-        <button class="btn btn-white" onclick="openModal('modalAdd')">+ Tambah Catatan</button>
+      <div class="page-top-actions" th:if="${isEditor}">
+        <button class="btn btn-white" id="btnTambah">+ Tambah Catatan</button>
       </div>
     </div>
     <div class="page-body">
@@ -127,7 +124,7 @@
       </form>
       <div class="card"><div class="table-wrap">
         <table>
-          <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Tanggal</th><th>Status</th><th>Keterangan</th><th>Aksi</th></tr></thead>
+          <thead><tr><th>#</th><th>Nama</th><th>Kelas</th><th>Tanggal</th><th>Status</th><th>Keterangan</th><th th:if="${isEditor}">Aksi</th></tr></thead>
           <tbody>
             <tr th:if="${disiplinList.isEmpty()}"><td colspan="7"><div class="empty"><p>📋 Belum ada catatan disiplin</p></div></td></tr>
             <tr th:each="d, i : ${disiplinList}">
@@ -137,7 +134,7 @@
               <td style="font-size:12px;color:var(--text3)" th:text="${d.tanggal}"></td>
               <td><span class="badge" th:classappend="${d.status == 'Hadir'} ? 'badge-green' : (${d.status == 'Alpa'} ? 'badge-red' : 'badge-yellow')" th:text="${d.status}"></span></td>
               <td style="color:var(--text2)" th:text="${d.keterangan}"></td>
-              <td>
+              <td th:if="${isEditor}">
                 <form th:action="@{/disiplin/hapus/{id}(id=${d.id})}" method="post" style="display:inline" onsubmit="return confirm('Hapus catatan ini?')">
                   <button type="submit" class="btn btn-danger btn-sm">🗑️ Hapus</button>
                 </form>
@@ -148,11 +145,11 @@
       </div></div>
     </div>
   </div>
-  <div class="modal-overlay" id="modalAdd" onclick="if(event.target===this)closeModal('modalAdd')">
+  <div class="modal-overlay" id="modalAdd">
     <div class="modal">
       <h2>Tambah Catatan Disiplin</h2>
       <form th:action="@{/disiplin/simpan}" method="post">
-        <div class="form-field" style="grid-column:1/-1">
+        <div class="form-field">
           <label>Anggota</label>
           <select name="anggotaId" required>
             <option value="">-- Pilih Anggota --</option>
@@ -160,18 +157,13 @@
           </select>
         </div>
         <div class="form-row">
-          <div class="form-field">
-            <label>Status</label>
-            <select name="status">
-              <option value="Hadir">Hadir</option><option value="Izin">Izin</option>
-              <option value="Sakit">Sakit</option><option value="Alpa">Alpa</option>
-            </select>
-          </div>
+          <div class="form-field"><label>Status</label>
+            <select name="status"><option value="Hadir">Hadir</option><option value="Izin">Izin</option><option value="Sakit">Sakit</option><option value="Alpa">Alpa</option></select></div>
           <div class="form-field"><label>Tanggal</label><input type="date" name="tanggal" required/></div>
         </div>
         <div class="form-field"><label>Keterangan</label><textarea name="keterangan" rows="2" placeholder="Keterangan tambahan..."></textarea></div>
         <div class="modal-actions">
-          <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Batal</button>
+          <button type="button" class="btn btn-ghost" id="btnBatal">Batal</button>
           <button type="submit" class="btn btn-primary">Simpan</button>
         </div>
       </form>
@@ -179,9 +171,15 @@
   </div>
   <div class="toast" id="toast"></div>
   <script>
-    function openModal(id) { document.getElementById(id).classList.add('open'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-    window.onload = function() { const t = document.getElementById('toast'); if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); } }
+    var modal = document.getElementById('modalAdd');
+    function openModal() { modal.classList.add('open'); }
+    function closeModal() { modal.classList.remove('open'); }
+    var btnTambah = document.getElementById('btnTambah');
+    if (btnTambah) btnTambah.addEventListener('click', openModal);
+    var btnBatal = document.getElementById('btnBatal');
+    if (btnBatal) btnBatal.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
+    window.onload = function() { var t = document.getElementById('toast'); if (t && t.textContent.trim()) { t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); }, 3000); } }
   </script>
 </body>
 </html>
